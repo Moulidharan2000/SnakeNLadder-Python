@@ -1,3 +1,6 @@
+from random import randint
+
+
 class Game:
     def __init__(self, players):
         self.players = players
@@ -5,7 +8,8 @@ class Game:
 
     def start(self):
         if self.players == 1 and self.position == 0:
-            print("Game Start")
+            dice = randint(1, 6)
+            print("Dice Number : ", dice)
         else:
             print("Invalid Players")
 
