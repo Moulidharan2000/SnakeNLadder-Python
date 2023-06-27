@@ -13,7 +13,6 @@ class Game:
         if self.players == 1:
             print("Player : ", self.players)
             print("Player Position : ", self.position)
-            print("Dice Number : ", self.dice)
             return True
         return False
 
@@ -21,33 +20,30 @@ class Game:
         while self.position <= self.win_position:
             self.dice = randint(1, 6)
             options_rand = randint(1, 3)
+            previous_position = self.position
             if options_rand in self.options_dict.keys():
+                print("\nDice Number : ", self.dice)
                 if options_rand == 1:
-                    print("\nDice Number : ", self.dice)
                     print(self.options_dict.get(options_rand))
                     self.position = self.position
-                    print("Player Position : ", self.position)
                 elif options_rand == 2:
-                    print("\nDice Number : ", self.dice)
                     print(self.options_dict.get(options_rand))
                     self.position += self.dice
-                    print("Player Position : ", self.position)
                 elif options_rand == 3:
-                    print("\nDice Number : ", self.dice)
                     print(self.options_dict.get(options_rand))
-                    if self.position <= 0:
+                    self.position -= self.dice
+                    if self.position < 0:
                         self.position = 0
-                        print("Player Position : ", self.position)
-                    else:
-                        self.position -= self.dice
-                        print("Player Position : ", self.position)
-            if self.position == self.win_position:
+            print("Player Position : ", self.position)
+            if self.position > self.win_position:
+                self.position = previous_position
+            elif self.position == self.win_position:
                 print("Player 1 Wins...")
                 break
 
 
 if __name__ == '__main__':
-    game = Game(int(input("Enter Player Number : ")))
+    game = Game(int(input("Enter number of Players : ")))
     if game.start():
         game.options_check()
     else:
