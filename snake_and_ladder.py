@@ -17,8 +17,10 @@ class Game:
         return False
 
     def options_check(self):
+        roll_count = 0
         while self.position <= self.win_position:
             self.dice = randint(1, 6)
+            roll_count += 1
             options_rand = randint(1, 3)
             previous_position = self.position
             if options_rand in self.options_dict.keys():
@@ -34,12 +36,14 @@ class Game:
                     self.position -= self.dice
                     if self.position < 0:
                         self.position = 0
-            print("Player Position : ", self.position)
             if self.position > self.win_position:
                 self.position = previous_position
             elif self.position == self.win_position:
+                print("Player Position : ", self.position)
                 print("Player 1 Wins...")
+                print("Dice Rolls : ", roll_count)
                 break
+            print("Player Position : ", self.position)
 
 
 if __name__ == '__main__':
