@@ -5,38 +5,50 @@ class Game:
     def __init__(self, players):
         self.players = players
         self.position = 0
-        self.dice = randint(1, 6)
+        self.dice = 0
         self.options_dict = {1: "No Play", 2: "Ladder", 3: "Snake"}
+        self.win_position = 100
 
     def start(self):
         if self.players == 1:
             print("Player : ", self.players)
             print("Player Position : ", self.position)
             print("Dice Number : ", self.dice)
-        else:
-            print("Invalid Players")
+            return True
+        return False
 
     def options_check(self):
-        options_rand = randint(1, 3)
-        if options_rand in self.options_dict.keys():
-            if options_rand == 1:
-                print("\n", self.options_dict.get(options_rand))
-                self.position = self.position
-                print("Player Position : ", self.position)
-            elif options_rand == 2:
-                print("\nLadder...")
-                self.position += self.dice
-                print("Player Position : ", self.position)
-            elif options_rand == 3:
-                if self.position == 0:
-                    print("\nSnake")
+        while self.position <= self.win_position:
+            self.dice = randint(1, 6)
+            options_rand = randint(1, 3)
+            if options_rand in self.options_dict.keys():
+                if options_rand == 1:
+                    print("\nDice Number : ", self.dice)
+                    print(self.options_dict.get(options_rand))
+                    self.position = self.position
                     print("Player Position : ", self.position)
-                else:
-                    self.position -= self.dice
+                elif options_rand == 2:
+                    print("\nDice Number : ", self.dice)
+                    print(self.options_dict.get(options_rand))
+                    self.position += self.dice
                     print("Player Position : ", self.position)
+                elif options_rand == 3:
+                    print("\nDice Number : ", self.dice)
+                    print(self.options_dict.get(options_rand))
+                    if self.position <= 0:
+                        self.position = 0
+                        print("Player Position : ", self.position)
+                    else:
+                        self.position -= self.dice
+                        print("Player Position : ", self.position)
+            if self.position == self.win_position:
+                print("Player 1 Wins...")
+                break
 
 
 if __name__ == '__main__':
     game = Game(int(input("Enter Player Number : ")))
-    game.start()
-    game.options_check()
+    if game.start():
+        game.options_check()
+    else:
+        print("Invalid Players...")
